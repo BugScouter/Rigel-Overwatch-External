@@ -67,9 +67,9 @@ namespace OW {
 			while (true) {
 				uint64_t Key = FindPatternExReg(key_sig, key_mask, 0x100000);
 				//printf("%llx\n", Key);
-				if (Key && Key < 0xf000000000000000 && RPM<uint64_t>(Key - 0x60) > 0x100000000000000 && RPM<uint64_t>(Key + 0xa8) > 0x100000000000000) {
-					GlobalKey1 = RPM<uint64_t>(Key - 0x60);
-					GlobalKey2 = RPM<uint64_t>(Key + 0xa8);
+				if (Key && Key < 0xf000000000000000 && RPM<uint64_t>(Key - 0xF0) > 0x100000000000000 && RPM<uint64_t>(Key - 0x40) > 0x100000000000000) {
+					GlobalKey2 = RPM<uint64_t>(Key - 0x40);
+					GlobalKey1 = RPM<uint64_t>(Key - 0xF0);
 					printf("\nWelcome to Rigel\n");
 					//printf("%llx\n", GlobalKey1);
 					//printf("%llx\n\n\n", GlobalKey2);
@@ -88,7 +88,7 @@ namespace OW {
 			static auto key_mask = "x???xx?xx?????xxxxxx";
 			//if (is_found == false) {
 				//static uint64_t Key = FindPatternExReg(key_sig, key_mask, 0x100000) - 0x70;
-				//if (RPM<uint64_t>(dwGameBase + 0x1DD75CF - 0x40) && RPM<uint64_t>(dwGameBase + 0x1DD75CF - 0x48))
+				//if (RPM<uint64_t >(dwGameBase + 0x1DD75CF - 0x40) && RPM<uint64_t>(dwGameBase + 0x1DD75CF - 0x48))
 				//{
 			char buffer[256];
 			GetPrivateProfileString("KEY", "key1", "0", buffer, 256, "C:\\ProgramData\\KEY.ini");
@@ -213,7 +213,7 @@ namespace OW {
 			return -1;
 		}
 
-		__forceinline std::vector<DWORD64> FindPatternEx(DWORD64 start, DWORD64 end, BYTE* pattern, std::string mask, MEMORY_BASIC_INFORMATION64 mbi, DWORD64 RgSize)
+		__ forceinline std::vector<DWORD64> FindPatternEx(DWORD64 start, DWORD64 end, BYTE* pattern, std::string mask, MEMORY_BASIC_INFORMATION64 mbi, DWORD64 RgSize)
 		{
 			DWORD64 current_chunk = start;
 			std::vector<DWORD64> found;
@@ -329,7 +329,7 @@ namespace OW {
 
 			for (int i = 0; i < StartPointers.size(); i++)
 			{
-				for (int j = 0; j < mbis.size(); j++) {
+				for (int j = 0 ; j < mbis.size(); j++) {
 					if (mbis[j].BaseAddress < StartPointers[i] && StartPointers[i] - mbis[j].BaseAddress < mbis[j].RegionSize) {
 						StartPointers[i] = mbis[j].BaseAddress;
 					}
